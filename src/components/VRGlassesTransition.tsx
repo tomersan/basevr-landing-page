@@ -315,17 +315,36 @@ export default function VRGlassesTransition() {
               >
                 {/* Lens glass effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[rgba(0,162,255,0.1)] to-[rgba(0,40,80,0.8)]" />
-                {/* Animated content inside lens */}
+                {/* Content inside lens */}
                 <div
                   ref={lensContentRef}
                   className="absolute inset-0 opacity-0 scale-90 overflow-hidden"
                 >
-                  <iframe
-                    src="https://editor.rollinom.com/360/?id=378539746h"
-                    className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
-                    loading="lazy"
-                    title="VR Lens Left"
-                  />
+                  {!isMobile ? (
+                    <iframe
+                      src="https://editor.rollinom.com/360/?id=378539746h"
+                      className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
+                      loading="lazy"
+                      title="VR Lens Left"
+                    />
+                  ) : (
+                    <div className="absolute inset-0" style={{ animation: "vrRoomPan 8s ease-in-out infinite" }}>
+                      <div className="absolute inset-[-50%] w-[200%] h-[200%]"
+                        style={{
+                          background: `
+                            linear-gradient(135deg, #8B6914 0%, #C4903A 20%, #E8C678 40%, #F5E6C8 60%, #C4903A 80%, #6B4E0A 100%)
+                          `,
+                        }}
+                      />
+                      {/* Window light */}
+                      <div className="absolute top-[10%] left-[20%] w-[40%] h-[50%] bg-white/20 rounded-sm" />
+                      <div className="absolute top-[10%] left-[22%] w-[36%] h-[46%] bg-gradient-to-b from-[rgba(135,206,255,0.4)] to-transparent rounded-sm" />
+                      {/* Floor */}
+                      <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-[#3D2B0A] to-transparent" />
+                      {/* Furniture shadow */}
+                      <div className="absolute bottom-[15%] right-[10%] w-[50%] h-[25%] bg-[rgba(60,40,10,0.5)] rounded-lg" />
+                    </div>
+                  )}
                 </div>
                 {/* Lens reflection */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent rounded-full" />
@@ -345,15 +364,31 @@ export default function VRGlassesTransition() {
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-bl from-[rgba(0,162,255,0.1)] to-[rgba(0,40,80,0.8)]" />
-                {/* Animated content inside lens */}
+                {/* Content inside lens */}
                 <div ref={lensContentRightRef} className="absolute inset-0 opacity-0 scale-90 overflow-hidden">
-                  <iframe
-                    src="https://editor.rollinom.com/360/?id=378539746h"
-                    className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
-                    loading="lazy"
-                    title="VR Lens Right"
-                    style={{ transform: "translateX(10%)" }}
-                  />
+                  {!isMobile ? (
+                    <iframe
+                      src="https://editor.rollinom.com/360/?id=378539746h"
+                      className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
+                      loading="lazy"
+                      title="VR Lens Right"
+                      style={{ transform: "translateX(10%)" }}
+                    />
+                  ) : (
+                    <div className="absolute inset-0" style={{ animation: "vrRoomPan 8s ease-in-out infinite 0.3s" }}>
+                      <div className="absolute inset-[-50%] w-[200%] h-[200%]"
+                        style={{
+                          background: `
+                            linear-gradient(135deg, #8B6914 0%, #C4903A 20%, #E8C678 40%, #F5E6C8 60%, #C4903A 80%, #6B4E0A 100%)
+                          `,
+                        }}
+                      />
+                      <div className="absolute top-[10%] right-[20%] w-[40%] h-[50%] bg-white/20 rounded-sm" />
+                      <div className="absolute top-[10%] right-[22%] w-[36%] h-[46%] bg-gradient-to-b from-[rgba(135,206,255,0.4)] to-transparent rounded-sm" />
+                      <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-[#3D2B0A] to-transparent" />
+                      <div className="absolute bottom-[15%] left-[10%] w-[50%] h-[25%] bg-[rgba(60,40,10,0.5)] rounded-lg" />
+                    </div>
+                  )}
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-bl from-white/10 via-transparent to-transparent rounded-full" />
                 {/* Scanning line */}
@@ -456,6 +491,13 @@ export default function VRGlassesTransition() {
         @keyframes vrLensShift {
           0%, 100% { transform: translateX(0) translateY(0); }
           50% { transform: translateX(10%) translateY(-10%); }
+        }
+        @keyframes vrRoomPan {
+          0% { transform: translate(0%, 0%) scale(1.2); }
+          25% { transform: translate(-5%, -3%) scale(1.25); }
+          50% { transform: translate(-8%, 2%) scale(1.3); }
+          75% { transform: translate(-3%, -2%) scale(1.2); }
+          100% { transform: translate(0%, 0%) scale(1.2); }
         }
       `}</style>
     </div>
