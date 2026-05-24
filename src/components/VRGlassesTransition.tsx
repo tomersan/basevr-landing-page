@@ -114,7 +114,8 @@ export default function VRGlassesTransition() {
       {/* Background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,162,255,0.08)_0%,transparent_60%)]" />
 
-      {/* Ambient floating dots */}
+      {/* Ambient floating dots - desktop only */}
+      {!isMobile && (
       <div className="absolute inset-0 pointer-events-none">
         {Array.from({ length: 12 }).map((_, i) => (
           <div
@@ -131,6 +132,7 @@ export default function VRGlassesTransition() {
           />
         ))}
       </div>
+      )}
 
       <div className="flex flex-col items-center gap-8">
         {/* Intro text - visible before scroll starts */}
@@ -150,12 +152,13 @@ export default function VRGlassesTransition() {
 
         {/* VR Goggles container */}
         <div className="relative">
-          {/* Orbiting rings around goggles */}
+          {/* Orbiting rings around goggles - desktop only */}
           <div
             ref={ringsRef}
             className="absolute inset-0 pointer-events-none"
             style={{ opacity: 0 }}
           >
+            {!isMobile && (<>
             {/* Ring 1 - large orbit */}
             <div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[280px] md:w-[620px] md:h-[380px] rounded-[50%] border border-[rgba(0,162,255,0.25)]"
@@ -201,14 +204,16 @@ export default function VRGlassesTransition() {
                 boxShadow: "0 0 8px #87CEFF",
               }}
             />
+            </>)}
           </div>
 
-          {/* Light rays from lenses */}
+          {/* Light rays from lenses - desktop only */}
           <div
             ref={raysRef}
             className="absolute inset-0 pointer-events-none"
             style={{ opacity: 0 }}
           >
+            {!isMobile && (<>
             {/* Left lens rays */}
             <div className="absolute top-1/2 right-[20%] -translate-y-1/2 md:right-[18%]">
               {Array.from({ length: 6 }).map((_, i) => (
@@ -241,15 +246,16 @@ export default function VRGlassesTransition() {
                 />
               ))}
             </div>
+            </>)}
           </div>
 
-          {/* Scattered particles */}
+          {/* Scattered particles - desktop only */}
           <div
             ref={particlesRef}
             className="absolute inset-0 pointer-events-none"
             style={{ opacity: 0 }}
           >
-            {Array.from({ length: 8 }).map((_, i) => {
+            {!isMobile && Array.from({ length: 8 }).map((_, i) => {
               const angle = (i / 8) * Math.PI * 2;
               const radius = 180 + (i % 3) * 40;
               const x = Math.cos(angle) * radius;
@@ -314,19 +320,12 @@ export default function VRGlassesTransition() {
                   ref={lensContentRef}
                   className="absolute inset-0 opacity-0 scale-90 overflow-hidden"
                 >
-                  {!isMobile ? (
-                    <iframe
-                      src="https://editor.rollinom.com/360/?id=378539746h"
-                      className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
-                      loading="lazy"
-                      title="VR Lens Left"
-                    />
-                  ) : (
-                    <>
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#00A2FF] via-[#0066CC] to-[#003366]" style={{ animation: "vrLensContent 4s ease-in-out infinite" }} />
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
-                    </>
-                  )}
+                  <iframe
+                    src="https://editor.rollinom.com/360/?id=378539746h"
+                    className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
+                    loading="lazy"
+                    title="VR Lens Left"
+                  />
                 </div>
                 {/* Lens reflection */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent rounded-full" />
@@ -348,20 +347,13 @@ export default function VRGlassesTransition() {
                 <div className="absolute inset-0 bg-gradient-to-bl from-[rgba(0,162,255,0.1)] to-[rgba(0,40,80,0.8)]" />
                 {/* Animated content inside lens */}
                 <div ref={lensContentRightRef} className="absolute inset-0 opacity-0 scale-90 overflow-hidden">
-                  {!isMobile ? (
-                    <iframe
-                      src="https://editor.rollinom.com/360/?id=378539746h"
-                      className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
-                      loading="lazy"
-                      title="VR Lens Right"
-                      style={{ transform: "translateX(10%)" }}
-                    />
-                  ) : (
-                    <>
-                      <div className="absolute inset-0 bg-gradient-to-bl from-[#00A2FF] via-[#0066CC] to-[#003366]" style={{ animation: "vrLensContent 4s ease-in-out infinite 0.5s" }} />
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_40%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
-                    </>
-                  )}
+                  <iframe
+                    src="https://editor.rollinom.com/360/?id=378539746h"
+                    className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
+                    loading="lazy"
+                    title="VR Lens Right"
+                    style={{ transform: "translateX(10%)" }}
+                  />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-bl from-white/10 via-transparent to-transparent rounded-full" />
                 {/* Scanning line */}
