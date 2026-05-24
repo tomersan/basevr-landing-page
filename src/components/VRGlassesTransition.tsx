@@ -35,13 +35,15 @@ export default function VRGlassesTransition() {
     const introText = introTextRef.current;
     if (!section || !goggles || !lensContent || !lensContentRight || !text || !rings || !rays || !particles || !introText) return;
 
+    const mobile = window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: "top top",
-        end: "+=200%",
+        end: mobile ? "+=100%" : "+=200%",
         pin: true,
-        scrub: 1,
+        scrub: mobile ? 0.5 : 1,
         anticipatePin: 1,
       },
     });

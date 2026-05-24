@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -13,42 +13,80 @@ export default function ScrollEffects() {
     const mobile = window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     setIsMobile(mobile);
 
-    // === Section reveal animations ===
     const sections = document.querySelectorAll("section");
-    sections.forEach((section) => {
-      gsap.fromTo(
-        section,
-        { opacity: 0.3 },
-        {
-          opacity: 1,
-          duration: 1,
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            end: "top 30%",
-            scrub: 1,
-          },
-        }
-      );
-    });
 
-    // === Parallax on section dividers ===
+    if (mobile) {
+      // Mobile: simple one-time fade-in with slight upward movement
+      sections.forEach((section) => {
+        gsap.set(section, { opacity: 0, y: 30 });
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 85%",
+          once: true,
+          onEnter: () => {
+            gsap.to(section, {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: "power2.out",
+            });
+          },
+        });
+      });
+    } else {
+      // Desktop: smooth scrub opacity
+      sections.forEach((section) => {
+        gsap.fromTo(
+          section,
+          { opacity: 0.3 },
+          {
+            opacity: 1,
+            duration: 1,
+            scrollTrigger: {
+              trigger: section,
+              start: "top 80%",
+              end: "top 30%",
+              scrub: 1,
+            },
+          }
+        );
+      });
+    }
+
+    // Section dividers - simpler on mobile
     const dividers = document.querySelectorAll(".section-divider");
     dividers.forEach((div) => {
-      gsap.fromTo(
-        div,
-        { scaleX: 0, opacity: 0 },
-        {
-          scaleX: 1,
-          opacity: 1,
-          scrollTrigger: {
-            trigger: div,
-            start: "top 90%",
-            end: "top 60%",
-            scrub: 1,
+      if (mobile) {
+        gsap.set(div, { scaleX: 0, opacity: 0 });
+        ScrollTrigger.create({
+          trigger: div,
+          start: "top 90%",
+          once: true,
+          onEnter: () => {
+            gsap.to(div, {
+              scaleX: 1,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power2.out",
+            });
           },
-        }
-      );
+        });
+      } else {
+        gsap.fromTo(
+          div,
+          { scaleX: 0, opacity: 0 },
+          {
+            scaleX: 1,
+            opacity: 1,
+            scrollTrigger: {
+              trigger: div,
+              start: "top 90%",
+              end: "top 60%",
+              scrub: 1,
+            },
+          }
+        );
+      }
     });
 
     return () => {
@@ -83,7 +121,7 @@ export default function ScrollEffects() {
         />
       )}
 
-      {/* Floating particles - fewer, simpler */}
+      {/* Floating particles - only on desktop */}
       {!isMobile && (
         <div className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
           {Array.from({ length: 10 }).map((_, i) => (
