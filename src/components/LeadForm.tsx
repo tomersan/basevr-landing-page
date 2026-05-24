@@ -25,15 +25,46 @@ export default function LeadForm() {
     e.preventDefault();
     setFormState("submitting");
 
+    const unitsLabel = formData.units
+      ? ({ "1-20": "1-20 יחידות", "21-50": "21-50 יחידות", "51-100": "51-100 יחידות", "100+": "100+ יחידות" } as Record<string, string>)[formData.units] ?? formData.units
+      : "לא צוין";
+
+    const payload = {
+      access_key: "f3fb227d-a7f9-4093-bcb7-657c98679547",
+      subject: `ליד חדש מ-BaseVR — ${formData.fullName} (${formData.company})`,
+      from_name: "BaseVR Landing",
+      replyto: formData.email,
+      botcheck: "",
+      name: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      company: formData.company,
+      project: formData.projectName || "לא צוין",
+      units: unitsLabel,
+      notes: formData.message || "אין",
+      message: [
+        `שם מלא: ${formData.fullName}`,
+        `חברה / יזם: ${formData.company}`,
+        `טלפון: ${formData.phone}`,
+        `אימייל: ${formData.email}`,
+        `שם הפרויקט: ${formData.projectName || "לא צוין"}`,
+        `מספר יחידות: ${unitsLabel}`,
+        `הערות: ${formData.message || "אין"}`,
+        ``,
+        `נשלח מ-BaseVR Landing Page · ${new Date().toLocaleString("he-IL", { timeZone: "Asia/Jerusalem" })}`,
+      ].join("\n"),
+    };
+
     try {
-      // Generic webhook endpoint — replace with your actual webhook URL
-      const response = await fetch("/api/lead", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
+      const result = await response.json().catch(() => ({}));
+
+      if (response.ok && result.success) {
         setFormState("success");
         setFormData({
           fullName: "",
@@ -45,9 +76,11 @@ export default function LeadForm() {
           message: "",
         });
       } else {
+        console.error("Web3Forms error:", result);
         setFormState("error");
       }
-    } catch {
+    } catch (err) {
+      console.error("Lead submit failed:", err);
       setFormState("error");
     }
   };

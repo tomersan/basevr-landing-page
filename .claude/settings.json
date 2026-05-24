@@ -14,7 +14,8 @@
       "Bash(vercel whoami *)",
       "Bash(npx --yes vercel@latest --version)",
       "Bash(npx --yes vercel@latest whoami)",
-      "Bash(npx --yes vercel@latest env add WEB3FORMS_ACCESS_KEY production)"
+      "Bash(npx --yes vercel@latest env add WEB3FORMS_ACCESS_KEY production)",
+      "Bash(git commit -m ' *)"
     ],
     "additionalDirectories": [
       "/Users/macbookpro/Downloads"
