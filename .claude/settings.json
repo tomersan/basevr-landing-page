@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /var/folders -name \"*.png\" -newer /tmp -mmin -5 2>/dev/null | head -20; echo \"---\"; find /tmp -name \"*.png\" -mmin -10 2>/dev/null | head -20; echo \"---\"; find ~/Downloads -mmin -30 -type f 2>/dev/null | head -20)",
+      "Read(//private/var/folders/**)",
+      "Read(//Users/macbookpro/Downloads/**)",
+      "Bash(cp \"/Users/macbookpro/Downloads/עיצוב ללא שם \\(10\\).png\" /Users/macbookpro/Desktop/basevr-landin-page/public/logos/blue-gallery.png)",
+      "Bash(cp \"/Users/macbookpro/Downloads/ec23c3e8-8e64-4d45-9c5b-11bf3ba4f1b7.jpg\" /Users/macbookpro/Desktop/basevr-landin-page/public/logos/rami-levy.jpg)",
+      "Bash(cp \"/Users/macbookpro/Downloads/אלקטרה-מגורים-480x122.png\" /Users/macbookpro/Desktop/basevr-landin-page/public/logos/electra.png)",
+      "Bash(cp /Users/macbookpro/Downloads/danNadlan.jpg /Users/macbookpro/Desktop/basevr-landin-page/public/logos/dan-nadlan.jpg)",
+      "Bash(cp /Users/macbookpro/Downloads/danNadlan.jpg /Users/macbookpro/Desktop/basevr-landin-page/public/logos/dan-nadlan.jpg && ls -la /Users/macbookpro/Desktop/basevr-landin-page/public/logos/dan-nadlan.jpg)",
+      "Bash(git check-ignore *)",
+      "Bash(vercel --version)",
+      "Bash(vercel whoami *)",
+      "Bash(npx --yes vercel@latest --version)",
+      "Bash(npx --yes vercel@latest whoami)",
+      "Bash(npx --yes vercel@latest env add WEB3FORMS_ACCESS_KEY production)"
+    ],
+    "additionalDirectories": [
+      "/Users/macbookpro/Downloads"
+    ]
+  }
+}

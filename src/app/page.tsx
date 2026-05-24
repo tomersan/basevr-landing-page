@@ -12,6 +12,7 @@ import SocialProof from "@/components/SocialProof";
 import LeadForm from "@/components/LeadForm";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 
 const CustomCursor = dynamic(() => import("@/components/CustomCursor"), { ssr: false });
 const ScrollEffects = dynamic(() => import("@/components/ScrollEffects"), { ssr: false });
@@ -52,6 +53,7 @@ export default function Home() {
       <LeadForm />
 
       <Footer />
+      <WhatsAppFloat />
     </main>
   );
 }

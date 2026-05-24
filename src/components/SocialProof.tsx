@@ -1,13 +1,14 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 
 const clients = [
-  { name: "רמי לוי נדל\"ן", logo: "רמי לוי" },
-  { name: "אלקטרה מגורים", logo: "אלקטרה" },
-  { name: "Blue Gallery", logo: "Blue Gallery" },
-  { name: "דן נדל\"ן", logo: "דן נדל\"ן" },
+  { name: "רמי לוי נדל\"ן", src: "/logos/rami-levy.jpg", imgClass: "max-h-full w-auto object-contain" },
+  { name: "אלקטרה מגורים", src: "/logos/electra.png", imgClass: "max-h-full w-auto object-contain" },
+  { name: "Blue Gallery", src: "/logos/blue-gallery.png", imgClass: "max-h-full w-auto object-contain" },
+  { name: "דן נדל\"ן", src: "/logos/dan-nadlan.jpg", imgClass: "h-full w-full object-contain scale-150" },
 ];
 
 export default function SocialProof() {
@@ -32,15 +33,19 @@ export default function SocialProof() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {clients.map((client, i) => (
             <motion.div
-              key={i}
+              key={client.name}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
-              className="glass-card-light px-6 py-8 flex items-center justify-center group hover:border-brand-blue/30 transition-all duration-300"
+              className="bg-white rounded-xl px-6 py-6 flex items-center justify-center h-28 md:h-32 shadow-sm border border-white/10 hover:border-brand-blue/40 hover:shadow-[0_0_24px_rgba(0,162,255,0.25)] transition-all duration-300 overflow-hidden"
             >
-              <span className="text-xl font-bold text-white group-hover:text-brand-blue transition-colors duration-300">
-                {client.logo}
-              </span>
+              <Image
+                src={client.src}
+                alt={client.name}
+                width={320}
+                height={120}
+                className={client.imgClass}
+              />
             </motion.div>
           ))}
         </div>

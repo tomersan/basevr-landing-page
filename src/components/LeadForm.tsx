@@ -70,7 +70,7 @@ export default function LeadForm() {
             מוכנים <span className="text-gradient-blue">למכור אחרת?</span>
           </h2>
           <p className="text-white text-lg max-w-xl mx-auto">
-            השאירו פרטים ונחזור אליכם עם הדגמה מותאמת לפרויקט שלכם — ללא עלות וללא התחייבות
+            השאירו פרטים לתיאום פגישה אישית בה נציג בפניכם הדגמה של חווית ה-VR שלנו. השירות הוא ללא עלות וללא התחייבות.
           </p>
         </motion.div>
 
@@ -191,10 +191,10 @@ export default function LeadForm() {
               <button
                 type="submit"
                 disabled={formState === "submitting"}
-                className="w-full py-4 bg-brand-blue hover:bg-brand-blue-light text-white font-bold text-lg rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-brand-blue/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 bg-brand-blue hover:bg-brand-blue-light text-white rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-brand-blue/30 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {formState === "submitting" ? (
-                  <span className="flex items-center justify-center gap-2">
+                  <span className="flex items-center justify-center gap-2 font-bold text-lg">
                     <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
@@ -202,7 +202,10 @@ export default function LeadForm() {
                     שולח...
                   </span>
                 ) : (
-                  "שלחו לי הדגמה חינם →"
+                  <span className="flex flex-col items-center leading-tight">
+                    <span className="font-bold text-lg">שלחו פרטים →</span>
+                    <span className="text-sm text-white/80 font-normal mt-1">נציג יחזור אליכם בהקדם לתיאום פגישה</span>
+                  </span>
                 )}
               </button>
 

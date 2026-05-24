@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+
 export async function POST(request: Request) {
   try {
     const data = await request.json();
 
-    // Validate required fields
-    const { fullName, company, phone, email } = data;
+    const { fullName, company, phone, email, projectName, units, message } = data;
     if (!fullName || !company || !phone || !email) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -13,33 +14,65 @@ export async function POST(request: Request) {
       );
     }
 
-    // TODO: Replace with your actual webhook URL
-    // Examples:
-    // - Zapier: https://hooks.zapier.com/hooks/catch/XXXX/XXXX
-    // - Make: https://hook.eu1.make.com/XXXX
-    // - Custom: https://your-api.com/leads
-    const WEBHOOK_URL = process.env.WEBHOOK_URL;
+    const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
+    if (!accessKey) {
+      console.error("Missing WEB3FORMS_ACCESS_KEY — lead not delivered:", data);
+      return NextResponse.json(
+        { error: "Email service not configured" },
+        { status: 500 }
+      );
+    }
 
-    if (WEBHOOK_URL) {
-      await fetch(WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...data,
-          source: "BaseVR Landing Page",
-          timestamp: new Date().toISOString(),
-        }),
-      });
-    } else {
-      // Log to console when no webhook is configured
-      console.log("📩 New lead received:", {
-        ...data,
-        timestamp: new Date().toISOString(),
-      });
+    const unitsLabel = units
+      ? { "1-20": "1-20 יחידות", "21-50": "21-50 יחידות", "51-100": "51-100 יחידות", "100+": "100+ יחידות" }[units as string] ?? units
+      : "לא צוין";
+
+    const payload = {
+      access_key: accessKey,
+      subject: `ליד חדש מ-BaseVR — ${fullName} (${company})`,
+      from_name: "BaseVR Landing",
+      replyto: email,
+      "h-Captcha-Response": undefined,
+      botcheck: "",
+      name: fullName,
+      email,
+      phone,
+      company,
+      project: projectName || "לא צוין",
+      units: unitsLabel,
+      notes: message || "אין",
+      message: [
+        `שם מלא: ${fullName}`,
+        `חברה / יזם: ${company}`,
+        `טלפון: ${phone}`,
+        `אימייל: ${email}`,
+        `שם הפרויקט: ${projectName || "לא צוין"}`,
+        `מספר יחידות: ${unitsLabel}`,
+        `הערות: ${message || "אין"}`,
+        ``,
+        `נשלח מ-BaseVR Landing Page · ${new Date().toLocaleString("he-IL", { timeZone: "Asia/Jerusalem" })}`,
+      ].join("\n"),
+    };
+
+    const res = await fetch(WEB3FORMS_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await res.json().catch(() => ({}));
+
+    if (!res.ok || !result.success) {
+      console.error("Web3Forms rejected the lead:", result);
+      return NextResponse.json(
+        { error: result.message || "Failed to deliver lead" },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error("Lead route crashed:", err);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
