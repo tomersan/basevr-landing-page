@@ -110,7 +110,7 @@ export default function VRGlassesTransition() {
 
       {/* Ambient floating dots */}
       <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 30 }).map((_, i) => (
+        {Array.from({ length: 12 }).map((_, i) => (
           <div
             key={i}
             className="absolute w-[3px] h-[3px] rounded-full bg-[#4FBFFF]"
@@ -243,8 +243,8 @@ export default function VRGlassesTransition() {
             className="absolute inset-0 pointer-events-none"
             style={{ opacity: 0 }}
           >
-            {Array.from({ length: 16 }).map((_, i) => {
-              const angle = (i / 16) * Math.PI * 2;
+            {Array.from({ length: 8 }).map((_, i) => {
+              const angle = (i / 8) * Math.PI * 2;
               const radius = 180 + (i % 3) * 40;
               const x = Math.cos(angle) * radius;
               const y = Math.sin(angle) * (radius * 0.6);
@@ -303,17 +303,14 @@ export default function VRGlassesTransition() {
               >
                 {/* Lens glass effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[rgba(0,162,255,0.1)] to-[rgba(0,40,80,0.8)]" />
-                {/* Content inside lens */}
+                {/* Animated content inside lens */}
                 <div
                   ref={lensContentRef}
-                  className="absolute inset-0 opacity-0 scale-90 overflow-hidden"
+                  className="absolute inset-0 opacity-0 scale-90"
                 >
-                  <iframe
-                    src="https://editor.rollinom.com/360/?id=378539746h"
-                    className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
-                    loading="lazy"
-                    title="VR Lens Left"
-                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#00A2FF] via-[#0066CC] to-[#003366]" style={{ animation: "vrLensContent 4s ease-in-out infinite" }} />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(0,162,255,0.4)_0%,transparent_40%)]" style={{ animation: "vrLensShift 3s ease-in-out infinite reverse" }} />
                 </div>
                 {/* Lens reflection */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent rounded-full" />
@@ -333,14 +330,11 @@ export default function VRGlassesTransition() {
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-bl from-[rgba(0,162,255,0.1)] to-[rgba(0,40,80,0.8)]" />
-                <div ref={lensContentRightRef} className="absolute inset-0 opacity-0 scale-90 overflow-hidden">
-                  <iframe
-                    src="https://editor.rollinom.com/360/?id=378539746h"
-                    className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
-                    loading="lazy"
-                    title="VR Lens Right"
-                    style={{ transform: "translateX(10%)" }}
-                  />
+                {/* Animated content inside lens */}
+                <div ref={lensContentRightRef} className="absolute inset-0 opacity-0 scale-90">
+                  <div className="absolute inset-0 bg-gradient-to-bl from-[#00A2FF] via-[#0066CC] to-[#003366]" style={{ animation: "vrLensContent 4s ease-in-out infinite 0.5s" }} />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_40%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_60%,rgba(0,162,255,0.4)_0%,transparent_40%)]" style={{ animation: "vrLensShift 3s ease-in-out infinite 0.5s" }} />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-bl from-white/10 via-transparent to-transparent rounded-full" />
                 {/* Scanning line */}
@@ -435,6 +429,14 @@ export default function VRGlassesTransition() {
         @keyframes vrBlink {
           0%, 40%, 100% { opacity: 1; }
           50%, 90% { opacity: 0.2; }
+        }
+        @keyframes vrLensContent {
+          0%, 100% { transform: scale(1); filter: brightness(1); }
+          50% { transform: scale(1.05); filter: brightness(1.3); }
+        }
+        @keyframes vrLensShift {
+          0%, 100% { transform: translateX(0) translateY(0); }
+          50% { transform: translateX(10%) translateY(-10%); }
         }
       `}</style>
     </div>
