@@ -2,14 +2,22 @@
 
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const VRRoom = dynamic(() => import("./VRRoom"), { ssr: false });
 
 export default function Hero() {
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const mobile = window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    setIsMobile(mobile);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* 3D Background */}
-      <VRRoom />
+      {/* 3D Background - only on desktop */}
+      {!isMobile && <VRRoom />}
 
       {/* Radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,162,255,0.1)_0%,transparent_70%)]" />
