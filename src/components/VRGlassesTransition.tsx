@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -16,6 +16,12 @@ export default function VRGlassesTransition() {
   const raysRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
   const introTextRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const mobile = window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    setIsMobile(mobile);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -306,11 +312,21 @@ export default function VRGlassesTransition() {
                 {/* Animated content inside lens */}
                 <div
                   ref={lensContentRef}
-                  className="absolute inset-0 opacity-0 scale-90"
+                  className="absolute inset-0 opacity-0 scale-90 overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#00A2FF] via-[#0066CC] to-[#003366]" style={{ animation: "vrLensContent 4s ease-in-out infinite" }} />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(0,162,255,0.4)_0%,transparent_40%)]" style={{ animation: "vrLensShift 3s ease-in-out infinite reverse" }} />
+                  {!isMobile ? (
+                    <iframe
+                      src="https://editor.rollinom.com/360/?id=378539746h"
+                      className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
+                      loading="lazy"
+                      title="VR Lens Left"
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#00A2FF] via-[#0066CC] to-[#003366]" style={{ animation: "vrLensContent 4s ease-in-out infinite" }} />
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
+                    </>
+                  )}
                 </div>
                 {/* Lens reflection */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent rounded-full" />
@@ -331,10 +347,21 @@ export default function VRGlassesTransition() {
               >
                 <div className="absolute inset-0 bg-gradient-to-bl from-[rgba(0,162,255,0.1)] to-[rgba(0,40,80,0.8)]" />
                 {/* Animated content inside lens */}
-                <div ref={lensContentRightRef} className="absolute inset-0 opacity-0 scale-90">
-                  <div className="absolute inset-0 bg-gradient-to-bl from-[#00A2FF] via-[#0066CC] to-[#003366]" style={{ animation: "vrLensContent 4s ease-in-out infinite 0.5s" }} />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_40%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_60%,rgba(0,162,255,0.4)_0%,transparent_40%)]" style={{ animation: "vrLensShift 3s ease-in-out infinite 0.5s" }} />
+                <div ref={lensContentRightRef} className="absolute inset-0 opacity-0 scale-90 overflow-hidden">
+                  {!isMobile ? (
+                    <iframe
+                      src="https://editor.rollinom.com/360/?id=378539746h"
+                      className="w-[300%] h-[300%] absolute top-[-100%] left-[-100%] border-0 pointer-events-none"
+                      loading="lazy"
+                      title="VR Lens Right"
+                      style={{ transform: "translateX(10%)" }}
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-bl from-[#00A2FF] via-[#0066CC] to-[#003366]" style={{ animation: "vrLensContent 4s ease-in-out infinite 0.5s" }} />
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_40%,rgba(255,255,255,0.2)_0%,transparent_50%)]" />
+                    </>
+                  )}
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-bl from-white/10 via-transparent to-transparent rounded-full" />
                 {/* Scanning line */}
