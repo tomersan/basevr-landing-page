@@ -9,14 +9,25 @@ const heebo = Heebo({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://basevr.co.il"),
   title: "BaseVR | חוויית המכירה החדשה בעולם הנדל״ן",
   description:
     "הפכו את תהליך המכירה לחוויה בלתי נשכחת עם טכנולוגיית VR מתקדמת. 31% מהר יותר, 25% יותר סגירות, 74% יתרון תחרותי.",
   keywords: "VR נדלן, סיור וירטואלי, מכירת דירות, BaseVR, תלת מימד נדלן",
   openGraph: {
     title: "BaseVR | חוויית המכירה החדשה בעולם הנדל״ן",
-    description: "הפכו את תהליך המכירה לחוויה בלתי נשכחת עם טכנולוגיית VR מתקדמת.",
+    description:
+      "הפכו את תהליך המכירה לחוויה בלתי נשכחת עם טכנולוגיית VR מתקדמת.",
+    url: "https://basevr.co.il",
+    siteName: "BaseVR",
+    locale: "he_IL",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BaseVR | חוויית המכירה החדשה בעולם הנדל״ן",
+    description:
+      "הפכו את תהליך המכירה לחוויה בלתי נשכחת עם טכנולוגיית VR מתקדמת.",
   },
 };
 

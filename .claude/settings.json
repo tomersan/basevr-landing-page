@@ -15,7 +15,17 @@
       "Bash(npx --yes vercel@latest --version)",
       "Bash(npx --yes vercel@latest whoami)",
       "Bash(npx --yes vercel@latest env add WEB3FORMS_ACCESS_KEY production)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(curl -sL https://basevr-landin-page.vercel.app/opengraph-image -o /tmp/og-preview.png)",
+      "Bash(curl -sL https://basevr-landin-page.vercel.app/icon -o /tmp/icon-preview.png)",
+      "Read(//tmp/**)",
+      "Bash(npx --yes vercel@latest --prod --yes)",
+      "Bash(curl -sL https://basevr-landin-page.vercel.app/opengraph-image -o /tmp/og-preview2.png)",
+      "Bash(npm install *)",
+      "Bash(node -e \"const b = require\\('bidi-js'\\)\\(\\); const s='טכנולוגיית VR מתקדמת · 25% יותר סגירות · 31% מהר יותר'; const e=b.getEmbeddingLevels\\(s,'rtl'\\); const re=b.getReorderedString\\(s,e\\); console.log\\('IN: '+s\\); console.log\\('OUT: '+re\\);\")",
+      "Bash(npm run *)",
+      "Bash(curl -sL \"https://basevr-landin-page.vercel.app/opengraph-image?v=$\\(date +%s\\)\" -o /tmp/og-preview3.png)",
+      "Bash(git add *)"
     ],
     "additionalDirectories": [
       "/Users/macbookpro/Downloads"
