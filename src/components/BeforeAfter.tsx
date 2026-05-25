@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const beforeItems = [
-  "הדפסות שמומשות, קשה לדמיין את התוצאה",
+  "הדמיות ממוחשבות, קשה לדמיין את התוצאה",
   "תוכנות 2D מסובכות, לא אינטראקטיביות",
   "חוסר חיבור רגשי",
   "תהליך ארוך ולא יעיל",

@@ -25,7 +25,8 @@
       "Bash(node -e \"const b = require\\('bidi-js'\\)\\(\\); const s='טכנולוגיית VR מתקדמת · 25% יותר סגירות · 31% מהר יותר'; const e=b.getEmbeddingLevels\\(s,'rtl'\\); const re=b.getReorderedString\\(s,e\\); console.log\\('IN: '+s\\); console.log\\('OUT: '+re\\);\")",
       "Bash(npm run *)",
       "Bash(curl -sL \"https://basevr-landin-page.vercel.app/opengraph-image?v=$\\(date +%s\\)\" -o /tmp/og-preview3.png)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git push *)"
     ],
     "additionalDirectories": [
       "/Users/macbookpro/Downloads"
